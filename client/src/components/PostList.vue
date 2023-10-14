@@ -14,6 +14,10 @@
       <strong>{{ post.creator }}</strong>
     </div>
   </div>
+  <footer class="card-footer">
+    <button class="card-footer-item button is-warning">Edit</button>
+    <button  @click="removePost(post._id)" class="card-footer-item button is-danger">Delete</button>
+  </footer>
 </div>
 </div>
 </template>
@@ -40,8 +44,15 @@ export default {
             console.log(error);
            }
         }
+        async function removePost(_id) {
+           await fetch(`${API_URL}/${_id}`, {
+                 method: "DELETE",
+            });
+          getPosts()
+        }
         return {
-            posts
+            posts,
+            removePost,
         }
     }
 }
