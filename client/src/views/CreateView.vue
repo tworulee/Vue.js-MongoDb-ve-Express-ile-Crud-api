@@ -1,56 +1,32 @@
 <template>
-<!-- <PostForm :post="post" :submitForm="createPost"/> -->
-<div class="container mt-5">
-        <form @submit.prevent="createPost">
-            <div class="field">
-                <label class="label">Title</label>
-                <div class="control">
-                    <input v-model="post.title" class="input" type="text" placeholder="Title">
-                </div>
-                </div>
-                <div class="field">
-                <label class="label">Creator</label>
-                <div class="control">
-                    <input  v-model="post.creator" class="input" type="text" placeholder="Creator">
-                </div>
-                </div>
-
-                <div class="field">
-                <label class="label">Post icerigi</label>
-                <div class="control">
-                    <textarea  v-model="post.content" class="textarea" placeholder="..."></textarea>
-                </div>
-                </div>
-
-                <div class="field is-grouped">
-                <div class="control">
-                    <button type="submit" class="button is-primary">Submit</button>
-                </div>
-                </div>
-        </form> 
-
-    </div>
+<PostForm/>
 </template>
 
 <script>
-// import PostForm from '@/components/PostForm.vue';
-import { reactive } from 'vue';
-import {useRouter} from "vue-router"
+import PostForm from '@/components/PostForm.vue';
+import { reactive,provide } from 'vue';
+import { useRouter } from "vue-router"
+
 export default {
     components: {
-      
+      PostForm
    },
+//    props: {
+//     post: Object,
+//     submitForm: Function,
+//   },
    setup() {
       const API_URL = "http://localhost:5000/posts"
-      const router= useRouter()
+      const router = useRouter()
 
+//------------Create---------------
       const post = reactive({
          title: "",
          content: "",
          creator:""
       })
 
-      async function createPost() {
+      async function submitForm() {
          const response = await fetch(API_URL, {
             method: "POST",
             headers: {
@@ -67,9 +43,15 @@ export default {
             name:"home"
          })
       }
+      //------------Create end---------------
+            //------------props gecme--------------
+                provide('post', post);
+                provide('submitForm', submitForm);
+            //------------props gecme---------------
+
       return {
          post,
-         createPost
+         submitForm,
       }
    }
 }

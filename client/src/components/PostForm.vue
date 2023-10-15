@@ -32,9 +32,20 @@
 </template>
 
 <script>
-// export default {
-//     props: ["post","submitForm"]
-// }
+import { inject } from 'vue';
+
+export default {
+  setup() {
+    const post = inject('post');
+    const submitForm = inject('submitForm');
+    // post ve submitForm verilerini kullanabilirsiniz
+
+    return {
+      post,
+      submitForm
+    };
+  }
+}
 </script>
 
 <style>
